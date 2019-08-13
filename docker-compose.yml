@@ -99,13 +99,10 @@ services:
     restart:    always
 
   com-secretcthulhu:
+      build:            ../../jekyll-site-secret-cthulhu/secret-cthulhu/
       container_name:   com-secretcthulhu
-      image:            jekyll/jekyll:latest
-      command:          jekyll serve --port 3000
-      volumes:
-        - ../../jekyll-site-secret-cthulhu/secret-cthulhu/:/srv/jekyll
       expose:
-        - 3000
+        - 80
       environment:
         - JEKYLL_ENV=production
         - VIRTUAL_HOST=secret-cthulhu.com,secretcthulhu.com
