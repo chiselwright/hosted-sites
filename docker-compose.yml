@@ -1,0 +1,114 @@
+version: '2'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs:ro
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    environment:
+      - HTTPS_METHOD=noredirect
+    restart:    always
+
+  whoami:
+    image: jwilder/whoami
+    container_name: whoami
+    environment:
+      - VIRTUAL_HOST=whoami.local
+
+  nginx-letsencrypt:
+    image:              jrcs/letsencrypt-nginx-proxy-companion
+    container_name:     nginx-letsencrypt
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - ./certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart:    always
+    environment:
+        - DEBUG=true
+
+  net-chizography:
+    #image:              dockerchizography_chizography-preview
+    build:              ../../docker-chizography/
+    container_name:     net-chizography
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=chizography.net
+      - LETSENCRYPT_EMAIL=chisel@chizography.net
+      - LETSENCRYPT_HOST=chizography.net
+      - HTTPS_METHOD=redirect
+    restart:    always
+
+  net-chizography-preview:
+    #image:              dockerchizography_chizography-preview
+    build:              ../../docker-chizography/
+    container_name:     net-chizography-preview
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=preview.chizography.net
+      - LETSENCRYPT_EMAIL=chisel@chizography.net
+      - LETSENCRYPT_HOST=preview.chizography.net
+      - HTTPS_METHOD=redirect
+    restart:    always
+
+  uk-hameraasfa:
+    build:              ../../docker-hameraasfa.uk/
+    container_name:     uk-hameraasfa
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=hameraasfa.uk
+      - LETSENCRYPT_EMAIL=chisel@chizography.net
+      - LETSENCRYPT_HOST=hameraasfa.uk
+      - HTTPS_METHOD=redirect
+    restart:    always
+
+  com-shouldireleaseonafriday:
+    build:              ../../docker-fridayrelease/
+    container_name:     com-shouldireleaseonafriday
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=shouldireleaseonafriday.com
+      - LETSENCRYPT_EMAIL=chisel@chizography.net
+      - LETSENCRYPT_HOST=shouldireleaseonafriday.com
+      - HTTPS_METHOD=redirect
+    restart:    always
+
+  com-theboardingparty:
+    build:              /home/chisel/development/theboardingparty.com/node-app
+    container_name:     com-theboardingparty
+    expose:
+      - 3000
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=theboardingparty.com
+      - LETSENCRYPT_EMAIL=chisel@chizography.net
+      - LETSENCRYPT_HOST=theboardingparty.com
+      - HTTPS_METHOD=redirect
+    restart:    always
+
+  com-secretcthulhu:
+      container_name:   com-secretcthulhu
+      image:            jekyll/jekyll:latest
+      command:          jekyll serve --port 3000
+      volumes:
+        - ../../jekyll-site-secret-cthulhu/secret-cthulhu/:/srv/jekyll
+      expose:
+        - 3000
+      environment:
+        - JEKYLL_ENV=production
+        - VIRTUAL_HOST=secret-cthulhu.com,secretcthulhu.com
+        - LETSENCRYPT_EMAIL=game@secret-cthulhu.com
+        - LETSENCRYPT_HOST=secret-cthulhu.com,secretcthulhu.com
+        - HTTPS_METHOD=redirect
