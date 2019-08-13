@@ -99,7 +99,7 @@ services:
     restart:    always
 
   com-secretcthulhu:
-      build:            ../../jekyll-site-secret-cthulhu/secret-cthulhu/
+      build:            ../../jekyll-site-secret-cthulhu/
       container_name:   com-secretcthulhu
       expose:
         - 80
