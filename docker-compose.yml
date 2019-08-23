@@ -73,19 +73,6 @@ services:
       - HTTPS_METHOD=redirect
     restart:    always
 
-  com-theboardingparty:
-    build:              /home/chisel/development/theboardingparty.com/node-app
-    container_name:     com-theboardingparty
-    expose:
-      - 3000
-    environment:
-      - NODE_ENV=production
-      - VIRTUAL_HOST=theboardingparty.com
-      - LETSENCRYPT_EMAIL=chisel@chizography.net
-      - LETSENCRYPT_HOST=theboardingparty.com
-      - HTTPS_METHOD=redirect
-    restart:    always
-
   com-secretcthulhu:
       build:            ../sites/site-secret-cthulhu.com/
       container_name:   com-secretcthulhu
