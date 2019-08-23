@@ -62,7 +62,7 @@ services:
     restart:    always
 
   uk-hameraasfa:
-    build:              ../../docker-hameraasfa.uk/
+    build:              ../sites/site-hameraasfa.uk
     container_name:     uk-hameraasfa
     expose:
       - 80
