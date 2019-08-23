@@ -50,7 +50,7 @@ services:
 
   net-chizography-preview:
     #image:              dockerchizography_chizography-preview
-    build:              ../../docker-chizography/
+    build:              ../sites/site-chizography.net/
     container_name:     net-chizography-preview
     expose:
       - 80
@@ -99,7 +99,7 @@ services:
     restart:    always
 
   com-secretcthulhu:
-      build:            ../../jekyll-site-secret-cthulhu/
+      build:            ../sites/site-secret-cthulhu.com/
       container_name:   com-secretcthulhu
       expose:
         - 80
