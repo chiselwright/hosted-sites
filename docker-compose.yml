@@ -73,18 +73,6 @@ services:
       - HTTPS_METHOD=redirect
     restart:    always
 
-  com-shouldireleaseonafriday:
-    build:              ../../docker-fridayrelease/
-    container_name:     com-shouldireleaseonafriday
-    expose:
-      - 80
-    environment:
-      - VIRTUAL_HOST=shouldireleaseonafriday.com
-      - LETSENCRYPT_EMAIL=chisel@chizography.net
-      - LETSENCRYPT_HOST=shouldireleaseonafriday.com
-      - HTTPS_METHOD=redirect
-    restart:    always
-
   com-theboardingparty:
     build:              /home/chisel/development/theboardingparty.com/node-app
     container_name:     com-theboardingparty
