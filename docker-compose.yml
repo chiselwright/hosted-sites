@@ -50,7 +50,10 @@ services:
 
   net-chizography-preview:
     #image:              dockerchizography_chizography-preview
-    build:              ../sites/site-chizography.net/
+    build:
+      context: ../sites/site-chizography.net/
+      args:
+          - jekyll_overrides=_config.preview.yml
     container_name:     net-chizography-preview
     expose:
       - 80
@@ -59,7 +62,6 @@ services:
       - LETSENCRYPT_EMAIL=chisel@chizography.net
       - LETSENCRYPT_HOST=preview.chizography.net
       - HTTPS_METHOD=redirect
-      - JEKYLL_OVERRIDES=_config.preview.yml
     restart:    always
 
   uk-hameraasfa:
