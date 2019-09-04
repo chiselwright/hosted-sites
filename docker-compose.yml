@@ -46,6 +46,9 @@ services:
       - LETSENCRYPT_HOST=chizography.net
       - HTTPS_METHOD=redirect
     restart:    always
+    depends_on:
+      - nginx-letsencrypt
+      - nginx-proxy
 
   net-chizography-preview:
     build:
@@ -61,6 +64,9 @@ services:
       - LETSENCRYPT_HOST=preview.chizography.net
       - HTTPS_METHOD=redirect
     restart:    always
+    depends_on:
+      - nginx-letsencrypt
+      - nginx-proxy
 
   uk-hameraasfa:
     build:              ../sites/site-hameraasfa.uk
@@ -73,15 +79,21 @@ services:
       - LETSENCRYPT_HOST=hameraasfa.uk
       - HTTPS_METHOD=redirect
     restart:    always
+    depends_on:
+      - nginx-letsencrypt
+      - nginx-proxy
 
   com-secretcthulhu:
-      build:            ../sites/site-secret-cthulhu.com/
-      container_name:   com-secretcthulhu
-      expose:
-        - 80
-      environment:
-        - JEKYLL_ENV=production
-        - VIRTUAL_HOST=secret-cthulhu.com,secretcthulhu.com
-        - LETSENCRYPT_EMAIL=game@secret-cthulhu.com
-        - LETSENCRYPT_HOST=secret-cthulhu.com,secretcthulhu.com
-        - HTTPS_METHOD=redirect
+    build:            ../sites/site-secret-cthulhu.com/
+    container_name:   com-secretcthulhu
+    expose:
+      - 80
+    environment:
+      - JEKYLL_ENV=production
+      - VIRTUAL_HOST=secret-cthulhu.com,secretcthulhu.com
+      - LETSENCRYPT_EMAIL=game@secret-cthulhu.com
+      - LETSENCRYPT_HOST=secret-cthulhu.com,secretcthulhu.com
+      - HTTPS_METHOD=redirect
+    depends_on:
+      - nginx-letsencrypt
+      - nginx-proxy
