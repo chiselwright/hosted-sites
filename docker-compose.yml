@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -7,8 +7,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs:ro
+      - ./certs:/etc/nginx/certs:rw
       - /etc/nginx/vhost.d
       - usr-share-nginx-html:/usr/share/nginx/html
     labels:
@@ -26,19 +27,12 @@ services:
   nginx-letsencrypt:
     image:              jrcs/letsencrypt-nginx-proxy-companion
     container_name:     nginx-letsencrypt
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./certs:/etc/nginx/certs:rw
-      - /etc/nginx/vhost.d
-      - usr-share-nginx-html:/usr/share/nginx/html
-    #volumes:
-      #- nginx-proxy
-    #volumes:
-      #- ./certs:/etc/nginx/certs:rw
-      #- /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-proxy
     restart:    always
     environment:
         - DEBUG=true
+        - DEFAULT_EMAIL=chisel@chizography.net
     depends_on:
       - nginx-proxy
 
