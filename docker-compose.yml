@@ -39,6 +39,8 @@ services:
     restart:    always
     environment:
         - DEBUG=true
+    depends_on:
+      - nginx-proxy
 
   net-chizography:
     build:              ../sites/site-chizography.net/
