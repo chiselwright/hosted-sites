@@ -99,5 +99,20 @@ services:
       - nginx-letsencrypt
       - nginx-proxy
 
+  com-theboardingparty:
+    build:            ../sites/site-theboardingparty.com/
+    container_name:   com-theboardingparty
+    expose:
+      - 80
+    environment:
+      - JEKYLL_ENV=production
+      - VIRTUAL_HOST=theboardingparty.com
+      - LETSENCRYPT_EMAIL=chisel@theboardingparty.com
+      - LETSENCRYPT_HOST=theboardingparty.com
+      - HTTPS_METHOD=redirect
+    depends_on:
+      - nginx-letsencrypt
+      - nginx-proxy
+
 volumes:
   usr-share-nginx-html:
