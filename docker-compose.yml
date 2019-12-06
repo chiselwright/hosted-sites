@@ -117,6 +117,7 @@ services:
     depends_on:
       - nginx-letsencrypt
       - nginx-proxy
+      - jekyll-base
 
 volumes:
   usr-share-nginx-html:
