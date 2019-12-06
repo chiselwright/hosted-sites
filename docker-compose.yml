@@ -102,6 +102,7 @@ services:
     depends_on:
       - nginx-letsencrypt
       - nginx-proxy
+      - jekyll-base
 
   com-theboardingparty:
     build:            ../sites/site-theboardingparty.com/
