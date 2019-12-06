@@ -36,6 +36,10 @@ services:
     depends_on:
       - nginx-proxy
 
+  jekyll-base:
+    build:              ../sites/jekyll-site-base
+    image:              jekyll-base:composed
+
   net-chizography:
     build:              ../sites/site-chizography.net/
     container_name:     net-chizography
