@@ -13,7 +13,8 @@ add_header X-Clacks-Overhead "GNU Terry Pratchett";
 # https://serverfault.com/a/927668
 proxy_hide_header Strict-Transport-Security;
 add_header Strict-Transport-Security "; includeSubDomains; preload";
-add_header Content-Security-Policy "default-src 'none'; script-src 'none'; script-src-elem 'self' code.jquery.com kit.fontawesome.com; style-src 'self' pro.fontawesome.com; style-src-elem 'self' pro.fontawesome.com kit-pro.fontawesome.com; img-src 'self' www.google-analytics.com; font-src pro.fontawesome.com kit-pro.fontawesome.com; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; manifest-src 'self'";
+# https://report-uri.com/home/generate
+add_header Content-Security-Policy "default-src 'none'; script-src 'none'; script-src-elem 'self' code.jquery.com kit.fontawesome.com maps.googleapis.com cdn.rawgit.com; style-src 'self' pro.fontawesome.com; style-src-elem 'self' pro.fontawesome.com kit-pro.fontawesome.com; img-src 'self' www.google-analytics.com; font-src pro.fontawesome.com kit-pro.fontawesome.com; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; manifest-src 'self'";
 add_header X-Override-Sanity-Check "Sure Thing";
 add_header X-Content-Type-Options "nosniff";
 add_header X-Frame-Options "deny";
