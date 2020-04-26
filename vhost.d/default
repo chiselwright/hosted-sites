@@ -17,4 +17,5 @@ add_header Content-Security-Policy "default-src 'none'; script-src 'none'; scrip
 add_header X-Override-Sanity-Check "Sure Thing";
 add_header X-Content-Type-Options "nosniff";
 add_header X-Frame-Options "deny";
+add_header Referrer-Policy "no-referrer";
 # end of Chisel's tweaks and additions
