@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+
+svc=${1:?Missing compose service name}
+
+# https://unix.stackexchange.com/questions/330660/prevent-grep-from-exiting-in-case-of-nomatch
+match_count=$(grep -c "^  ${svc}\+:" docker-compose.yml || :)
+
+if [[ "$match_count" -eq 0 ]]; then
+	echo "${svc}: no matching services in docker-compose.yml"
+	exit 1;
+elif [[ "$match_count" -ne 1 ]]; then
+	echo "${svc}: weird number of matches"
+	exit 2;
+fi
+
+docker-compose build ${svc} \
+	&& docker-compose up --force-recreate -d ${svc}; \
+	docker-compose logs --follow --tail=5
