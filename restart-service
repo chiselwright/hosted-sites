@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+if [ "$1" == "list" ]; then
+    grep '^  [-a-z]\+:' docker-compose.yml |sed "s/^[ \t]*//" |sed "s/:$//" |sort
+    exit
+fi
+
 svc=${1:?Missing compose service name}
 
 # https://unix.stackexchange.com/questions/330660/prevent-grep-from-exiting-in-case-of-nomatch
