@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs:rw
+        #- ./certs:/etc/nginx/certs:rw
       - ./vhost.d:/etc/nginx/vhost.d:rw
       - usr-share-nginx-html:/usr/share/nginx/html
     labels:
@@ -18,11 +18,11 @@ services:
       - HTTPS_METHOD=noredirect
     restart:    always
 
-  whoami:
-    image: jwilder/whoami
-    container_name: whoami
-    environment:
-      - VIRTUAL_HOST=whoami.local
+# whoami:
+#   image: jwilder/whoami
+#   container_name: whoami
+#   environment:
+#     - VIRTUAL_HOST=whoami.local
 
   nginx-letsencrypt:
     image:              jrcs/letsencrypt-nginx-proxy-companion
@@ -31,14 +31,15 @@ services:
       - nginx-proxy
     restart:    always
     environment:
-        - DEBUG=true
+        - DEBUG=false
         - DEFAULT_EMAIL=chisel@chizography.net
     depends_on:
       - nginx-proxy
 
-  jekyll-base:
-    build:              ../sites/jekyll-site-base
-    image:              jekyll-base:composed
+# jekyll-base:
+#   build:              ../sites/jekyll-site-base
+#   image:              jekyll-base:composed
+# xxx chizcw/jekyll-site-base:c5487a8
 
   net-chizography:
     build:              ../sites/site-chizography.net/
@@ -72,7 +73,6 @@ services:
     depends_on:
       - nginx-letsencrypt
       - nginx-proxy
-      - jekyll-base
 
   uk-hameraasfa:
     build:              ../sites/site-hameraasfa.uk
@@ -103,7 +103,6 @@ services:
     depends_on:
       - nginx-letsencrypt
       - nginx-proxy
-      - jekyll-base
 
   com-theboardingparty:
     build:            ../sites/site-theboardingparty.com/
@@ -119,7 +118,6 @@ services:
     depends_on:
       - nginx-letsencrypt
       - nginx-proxy
-      - jekyll-base
 
 volumes:
   usr-share-nginx-html:
