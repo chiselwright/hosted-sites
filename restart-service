@@ -19,6 +19,10 @@ elif [[ "$match_count" -ne 1 ]]; then
 	exit 2;
 fi
 
-docker-compose build ${svc}
-docker-compose up --force-recreate --remove-orphans -d ${svc}
+for svc in "$@"; do
+    echo "[$svc]";
+    docker-compose build ${svc}
+    docker-compose up --force-recreate --remove-orphans -d ${svc}
+done
+
 docker-compose logs --follow --tail=5
